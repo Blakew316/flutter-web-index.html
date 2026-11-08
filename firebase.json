@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "rewrites": [
+      { "source": "/main", "destination": "/index.html" },
+      { "source": "/upload", "destination": "/index.html" },
+      { "source": "/callback", "destination": "/index.html" }
+    ],
+    "headers": [
+      { "source": "**", "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]},
+      { "source": "**/*.@(js|css|html)", "headers": [
+        { "key": "Cache-Control", "value": "no-cache" }
+      ]}
+    ]
+  }
+}

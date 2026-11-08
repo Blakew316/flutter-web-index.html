@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Browse, view and upload photos, videos, audio and PDFs in your Google Drive.">
+  <meta name="theme-color" content="#1a73e8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Media Viewer">
+  <title>Media Viewer for Google Drive</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <noscript><p style="padding:2rem">This app needs JavaScript.</p></noscript>
+
+  <div id="boot" class="boot" aria-live="polite"><div class="spinner"></div></div>
+
+  <header id="topbar" class="topbar" hidden>
+    <a href="/main" data-nav class="brand"><img src="favicon.svg" alt="" width="28" height="28"><span>Media Viewer</span></a>
+    <nav class="tabs">
+      <a href="/main" data-nav data-tab="main">Library</a>
+      <a href="/upload" data-nav data-tab="upload">Upload</a>
+    </nav>
+    <div class="user">
+      <span id="userName" class="user-name"></span>
+      <button id="signOutBtn" class="btn ghost" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-login" class="view center" hidden>
+      <div class="card login">
+        <img src="favicon.svg" alt="" width="64" height="64">
+        <h1>Media Viewer for Google Drive</h1>
+        <p>Browse and view your photos, videos, audio and PDFs, and upload new files straight to Drive.</p>
+        <button id="signInBtn" class="btn primary" type="button">Sign in with Google</button>
+        <p id="loginError" class="error" role="alert" hidden></p>
+        <p class="fine">Files are read directly from your Drive in your browser. Nothing is stored on our servers.</p>
+      </div>
+    </section>
+
+    <section id="view-main" class="view" hidden>
+      <div class="toolbar">
+        <div class="seg" role="tablist" aria-label="Location">
+          <button type="button" data-loc="mine" class="on">My Drive</button>
+          <button type="button" data-loc="shared">Shared with me</button>
+        </div>
+        <form id="searchForm" class="search" role="search">
+          <input id="searchInput" type="search" placeholder="Search by name" aria-label="Search by name" autocomplete="off">
+        </form>
+        <div class="seg" id="kindFilter" aria-label="Filter by type">
+          <button type="button" data-kind="all" class="on">All</button>
+          <button type="button" data-kind="image">Photos</button>
+          <button type="button" data-kind="video">Videos</button>
+          <button type="button" data-kind="audio">Audio</button>
+          <button type="button" data-kind="pdf">PDF</button>
+        </div>
+      </div>
+      <nav id="crumbs" class="crumbs" aria-label="Folder path"></nav>
+      <div id="grid" class="grid"></div>
+      <p id="status" class="status" role="status"></p>
+      <div class="center"><button id="moreBtn" class="btn" type="button" hidden>Load more</button></div>
+    </section>
+
+    <section id="view-upload" class="view" hidden>
+      <div class="card wide">
+        <h2>Upload to Google Drive</h2>
+        <p class="fine">Destination: <strong id="uploadDest">My Drive</strong> <span class="fine">(browse to a folder in the Library first to change it)</span></p>
+        <label id="drop" class="drop" tabindex="0">
+          <input id="fileInput" type="file" multiple hidden>
+          <strong>Drop files here</strong><span>or click to choose</span>
+        </label>
+        <ul id="uploads" class="uploads"></ul>
+      </div>
+    </section>
+
+    <section id="view-callback" class="view center" hidden>
+      <div class="card"><div class="spinner"></div><p id="cbMsg">Finishing sign-in…</p></div>
+    </section>
+  </main>
+
+  <div id="viewer" class="viewer" hidden role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div class="viewer-bar">
+      <span id="viewerTitle" class="viewer-title"></span>
+      <a id="viewerOpen" class="btn ghost" target="_blank" rel="noopener">Open in Drive</a>
+      <a id="viewerDl" class="btn ghost">Download</a>
+      <button id="viewerClose" class="btn ghost" type="button" aria-label="Close">✕</button>
+    </div>
+    <button id="viewerPrev" class="nav prev" type="button" aria-label="Previous">‹</button>
+    <div id="viewerBody" class="viewer-body"></div>
+    <button id="viewerNext" class="nav next" type="button" aria-label="Next">›</button>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
