@@ -12,12 +12,15 @@ firebase deploy --only hosting     # project: photodrive-359504 (see .firebaserc
 Or push to `main` with the `FIREBASE_SERVICE_ACCOUNT` GitHub secret set (`.github/workflows/deploy.yml`).
 
 ## One-time Google Cloud setup (required for sign-in to work)
-In project 36909538617 (Google Cloud Console):
-1. **APIs & Services → Library**: enable **Google Drive API**.
-2. **Credentials → OAuth client** `36909538617-f46fpdoghbui5bn3e5r04qp06m1p1tkh…` → *Authorized JavaScript origins*: add
-   `https://photodrive-359504.web.app`, `https://photodrive-359504.firebaseapp.com`, your custom domain, and `http://localhost:8080` for local dev.
-3. **OAuth consent screen**: add scopes `drive.readonly` and `drive.file`. While in "Testing" only listed test users can sign in;
-   publishing for everyone requires Google's verification (Drive scopes are sensitive/restricted).
+IDs found in your original files: OAuth client `36909538617-f46fpdoghbui5bn3e5r04qp06m1p1tkh.apps.googleusercontent.com`
+(project number `36909538617`), Firebase project `photodrive-359504`. Direct links:
+
+1. Enable the Drive API: https://console.cloud.google.com/apis/library/drive.googleapis.com?project=photodrive-359504
+2. Open the OAuth client and add these **Authorized JavaScript origins** (no paths, no trailing slash):
+   `https://photodrive-359504.web.app`, `https://photodrive-359504.firebaseapp.com`, `http://localhost:8080`
+   https://console.cloud.google.com/apis/credentials?project=photodrive-359504
+3. Consent screen > Data access: add `drive.readonly` and `drive.file`; add yourself under Test users
+   https://console.cloud.google.com/auth/audience?project=photodrive-359504
 
 ## Local development
 ```bash
