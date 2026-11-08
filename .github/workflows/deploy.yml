@@ -5,9 +5,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      HAS_FIREBASE_SECRET: ${{ secrets.FIREBASE_SERVICE_ACCOUNT != '' }}
     steps:
+      - name: Skip notice
+        if: env.HAS_FIREBASE_SECRET != 'true'
+        run: echo "FIREBASE_SERVICE_ACCOUNT secret not set; skipping deploy."
       - uses: actions/checkout@v4
+        if: env.HAS_FIREBASE_SECRET == 'true'
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        if: env.HAS_FIREBASE_SECRET == 'true'
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
